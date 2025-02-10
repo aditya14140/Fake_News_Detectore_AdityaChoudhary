@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Check News | Fake News Detector</title>
+
+    <!-- Tailwind CSS -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .form-container {
+            background: linear-gradient(to right, #ffffff, #f7f8fc);
+        }
+        .btn-gradient {
+            background: linear-gradient(to right, #4CAF50, #2E8B57);
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(to right, #2E8B57, #4CAF50);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white py-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center px-5">
+            <h1 class="text-2xl font-bold tracking-wide">📰 Fake News Detector</h1>
+            <nav>
+                <a href="/" class="px-4 hover:text-gray-300 transition">Home</a>
+                <a href="/predict" class="px-4 hover:text-gray-300 transition">Check News</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="container mx-auto flex flex-col items-center justify-center py-12 px-4">
+        <div class="form-container shadow-lg rounded-lg p-8 w-full md:w-2/3 lg:w-1/2 text-center">
+            <h2 class="text-3xl font-semibold text-gray-900 mb-4">Fake News Detector 🧐</h2>
+            <p class="text-gray-600 mb-6">Enter a news article or statement below to analyze its authenticity.</p>
+            
+            <form action="{{ url_for('predict') }}" method="POST">
+                <textarea name="message" rows="5" required 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-lg shadow-sm"></textarea>
+                <button type="submit" 
+                    class="mt-4 w-full btn-gradient text-white py-3 rounded-lg text-lg font-semibold transition hover:shadow-md">
+                    Analyze 🕵️‍♂️
+                </button>
+            </form>
+
+            <!-- Result Display -->
+            <div class="mt-6 text-xl font-bold">
+                {% if prediction == ['FAKE'] %}
+                    <p class="text-red-600">⚠️ Fake News Detected! 📰</p>
+                {% elif prediction == ['REAL'] %}
+                    <p class="text-green-600">✅ This is Real News! 📰</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white text-center py-4 mt-12">
+        <p>&copy; 2025 Fake News Detector | Built with ❤️</p>
+    </footer>
+</body>
+</html>
